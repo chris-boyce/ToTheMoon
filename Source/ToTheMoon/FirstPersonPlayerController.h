@@ -30,6 +30,12 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="First Person Player|Character Movement")
 	TObjectPtr<UInputAction> ActionJump;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="First Person Player|Character Movement")
+	TObjectPtr<UInputAction> ActionSprint;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="First Person Player|Character Movement")
+	TObjectPtr<UInputAction> ActionCrouch;
+
 	//Input Mapping
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="First Person Player|Character Movement")
 	TObjectPtr<UInputMappingContext> InputMappingContext = nullptr;
@@ -44,6 +50,8 @@ protected:
 	void HandleLook(const FInputActionValue& InputActionValue);
 	void HandleMove(const FInputActionValue& InputActionValue);
 	void HandleJump();
+	void HandleSprint();
+	void HandleCrouch();
 
 private:
 	UPROPERTY()

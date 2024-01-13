@@ -34,6 +34,14 @@ void AFirstPersonPlayerController::OnPossess(APawn* aPawn)
 	{
 		EnhancedInputComponent->BindAction(ActionJump, ETriggerEvent::Triggered, this, &AFirstPersonPlayerController::HandleJump);
 	}
+	if(ActionCrouch)
+	{
+		EnhancedInputComponent->BindAction(ActionCrouch, ETriggerEvent::Triggered, this, &AFirstPersonPlayerController::HandleCrouch);
+	}
+	if(ActionSprint)
+	{
+		EnhancedInputComponent->BindAction(ActionSprint, ETriggerEvent::Triggered, this, &AFirstPersonPlayerController::HandleSprint);
+	}
 }
 
 void AFirstPersonPlayerController::OnUnPossess()
@@ -65,5 +73,25 @@ void AFirstPersonPlayerController::HandleJump()
 	{
 		PlayerCharacter->UnCrouch();
 		PlayerCharacter->Jump();
+	}
+}
+
+void AFirstPersonPlayerController::HandleSprint()
+{
+	if (PlayerCharacter)
+	{
+		PlayerCharacter->ToggleRunning();
+	}
+}
+
+void AFirstPersonPlayerController::HandleCrouch()
+{
+	if(PlayerCharacter && PlayerCharacter->bIsCrouched)
+	{
+		PlayerCharacter->UnCrouch();
+	}
+	else
+	{
+		PlayerCharacter->Crouch();
 	}
 }
