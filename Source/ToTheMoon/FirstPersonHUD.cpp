@@ -3,3 +3,9 @@
 
 #include "FirstPersonHUD.h"
 
+void AFirstPersonHUD::CycleToNextViewMode()
+{
+	++CurrentViewMode;
+	UE_LOG(LogTemp, Warning, TEXT("CycleToNextViewMode %s"), *UEnum::GetValueAsString(CurrentViewMode));
+	//UpdateWidget();
+}

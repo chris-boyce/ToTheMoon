@@ -4,6 +4,7 @@
 #include "FirstPersonPlayerController.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
+#include "FirstPersonHUD.h"
 #include "PlayerCharacter.h"
 
 void AFirstPersonPlayerController::OnPossess(APawn* aPawn)
@@ -41,6 +42,10 @@ void AFirstPersonPlayerController::OnPossess(APawn* aPawn)
 	if(ActionSprint)
 	{
 		EnhancedInputComponent->BindAction(ActionSprint, ETriggerEvent::Triggered, this, &AFirstPersonPlayerController::HandleSprint);
+	}
+	if(ActionCycleUI)
+	{
+		EnhancedInputComponent->BindAction(ActionCycleUI, ETriggerEvent::Triggered, this, &AFirstPersonPlayerController::HandleCycleUIMode);
 	}
 }
 
@@ -93,5 +98,13 @@ void AFirstPersonPlayerController::HandleCrouch()
 	else
 	{
 		PlayerCharacter->Crouch();
+	}
+}
+
+void AFirstPersonPlayerController::HandleCycleUIMode()
+{
+	if(PlayerHUD)
+	{
+		PlayerHUD->CycleToNextViewMode();
 	}
 }

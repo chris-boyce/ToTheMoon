@@ -12,6 +12,7 @@
 class UEnhancedInputComponent;
 class APlayerCharacter;
 class UInputMappingContext;
+class AFirstPersonHUD;
 
 UCLASS(Abstract)
 class TOTHEMOON_API AFirstPersonPlayerController : public APlayerController
@@ -36,6 +37,9 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="First Person Player|Character Movement")
 	TObjectPtr<UInputAction> ActionCrouch;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="First Person Player|UI")
+	TObjectPtr<UInputAction> ActionCycleUI;
+
 	//Input Mapping
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="First Person Player|Character Movement")
 	TObjectPtr<UInputMappingContext> InputMappingContext = nullptr;
@@ -52,6 +56,7 @@ protected:
 	void HandleJump();
 	void HandleSprint();
 	void HandleCrouch();
+	void HandleCycleUIMode();
 
 private:
 	UPROPERTY()
@@ -59,6 +64,9 @@ private:
 
 	UPROPERTY()
 	APlayerCharacter* PlayerCharacter = nullptr;
+
+	UPROPERTY()
+	AFirstPersonHUD* PlayerHUD = nullptr;
 	
 	
 };
