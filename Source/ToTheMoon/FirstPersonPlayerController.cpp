@@ -16,13 +16,14 @@ void AFirstPersonPlayerController::OnPossess(APawn* aPawn)
 	EnhancedInputComponent = Cast<UEnhancedInputComponent>(InputComponent);
 	checkf(EnhancedInputComponent, TEXT("No Enhanced Input Component"));
 
+	PlayerHUD = Cast<AFirstPersonHUD>(GetHUD());
+	checkf(PlayerHUD, TEXT("Unable to get reference to the HUD"));
+
 	UEnhancedInputLocalPlayerSubsystem* InputSubsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(GetLocalPlayer());
 	checkf(InputSubsystem, TEXT("Subsystem Not Setup"));
 	InputSubsystem->ClearAllMappings();
 	InputSubsystem->AddMappingContext(InputMappingContext, 0);
-
 	
-
 	if(ActionMove)
 	{
 		EnhancedInputComponent->BindAction(ActionMove, ETriggerEvent::Triggered, this, &AFirstPersonPlayerController::HandleMove);
@@ -42,11 +43,14 @@ void AFirstPersonPlayerController::OnPossess(APawn* aPawn)
 	if(ActionSprint)
 	{
 		EnhancedInputComponent->BindAction(ActionSprint, ETriggerEvent::Triggered, this, &AFirstPersonPlayerController::HandleSprint);
+		UE_LOG(LogTemp, Warning, TEXT("Sprint Binded"));
 	}
 	if(ActionCycleUI)
 	{
+		UE_LOG(LogTemp, Warning, TEXT("Action Cycle"));
 		EnhancedInputComponent->BindAction(ActionCycleUI, ETriggerEvent::Triggered, this, &AFirstPersonPlayerController::HandleCycleUIMode);
 	}
+	
 }
 
 void AFirstPersonPlayerController::OnUnPossess()
@@ -103,8 +107,10 @@ void AFirstPersonPlayerController::HandleCrouch()
 
 void AFirstPersonPlayerController::HandleCycleUIMode()
 {
+	
 	if(PlayerHUD)
 	{
+		UE_LOG(LogTemp, Warning, TEXT("Hello"));
 		PlayerHUD->CycleToNextViewMode();
 	}
 }

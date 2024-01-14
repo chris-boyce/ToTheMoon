@@ -88,6 +88,12 @@ void APlayerCharacter::AddMovementInput(FVector WorldDirection, float ScaleValue
 	if (bIsRunning) bHasRan = true;
 }
 
+void APlayerCharacter::BroadcastCurrentStats()
+{
+	OnHealthChange.Broadcast(CurrentHealth, CurrentHealth, MaxHealth);
+	OnStaminaChanged.Broadcast(CurrentStamina, CurrentStamina, MaxStamina);
+}
+
 void APlayerCharacter::SetRunning(bool IsRunning)
 {
 	bIsRunning = IsRunning;

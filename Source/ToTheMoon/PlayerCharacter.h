@@ -38,7 +38,9 @@ public:
 	virtual void Crouch(bool bCilentSimulation = false) override;
 
 	virtual void AddMovementInput(FVector WorldDirection, float ScaleValue = 1.0f, bool bForce = false) override;
-	
+
+	UFUNCTION(BlueprintCallable,Category="Player|Stats")
+	void BroadcastCurrentStats();
 	
 
 
