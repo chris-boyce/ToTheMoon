@@ -69,6 +69,8 @@ private:
 	
 	void ClearAllHandlers();
 
+	void ToggleIsVisableWidget();
+
 	UPROPERTY()
 	TObjectPtr<UWorld> World = nullptr;
 

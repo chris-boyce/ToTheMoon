@@ -17,7 +17,7 @@ void AFirstPersonHUD::BeginPlay()
 	World = GetWorld();
 	checkf(World, TEXT("World Not Found"));
 	
-	checkf(MinimalLayoutClass, TEXT("No Min"));
+	checkf(MinimalLayoutClass, TEXT("No Min Class"));
 	checkf(ModerateLayoutClass, TEXT("No Mod"));
 	checkf(OverloadLayoutClass, TEXT("No Overload"));
 
@@ -97,6 +97,7 @@ void AFirstPersonHUD::UpdateWidgets()
 
 	// This ensures that even if something has not changed recently, the newly switched-to widget will get sent
 	// the latest character stats, so it can update itself.
+	ToggleIsVisableWidget();
 	PlayerCharacter->BroadcastCurrentStats();
 }
 
@@ -107,5 +108,14 @@ void AFirstPersonHUD::ClearAllHandlers()
 		PlayerCharacter->OnHealthChange.Clear();
 		PlayerCharacter->OnStaminaChanged.Clear();
 		PlayerCharacter->OnKeyWalletAction.Clear();
+	}
+	
+}
+
+void AFirstPersonHUD::ToggleIsVisableWidget()
+{
+	if(OverloadLayoutWidget)
+	{
+		OverloadLayoutWidget->VisibilityToggle();
 	}
 }

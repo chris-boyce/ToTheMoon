@@ -8,9 +8,8 @@
 
 class UImage;
 class UHealthStaminaBarBase;
-/**
- * 
- */
+class UFPSCounterBase;
+
 UCLASS(Abstract)
 class TOTHEMOON_API UOverloadLayoutBase : public UWidgetBase
 {
@@ -19,7 +18,18 @@ public:
 	UPROPERTY(BlueprintReadOnly, Category="Constituent Controls", meta=(BindWidget))
 	TObjectPtr<UHealthStaminaBarBase> HealthStaminaBar = nullptr;
 
-	//UPROPERTY(BlueprintReadOnly, Category="Constituent Controls", meta=(BindWidget))
-	//TObjectPtr<UImage> Crosshair = nullptr;
+	UPROPERTY(BlueprintReadOnly, Category="Constituent Controls", meta=(BindWidget))
+	TObjectPtr<UFPSCounterBase> FPSCounterWidget = nullptr;
+	
+	void VisibilityToggle();
+	
+	void UpdateWidget();
+private:
+	FTimerHandle TimerHandle;
+	
+
+	
+
+	
 	
 };

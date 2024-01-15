@@ -110,7 +110,6 @@ void AFirstPersonPlayerController::HandleCycleUIMode()
 	
 	if(PlayerHUD)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Hello"));
 		PlayerHUD->CycleToNextViewMode();
 	}
 }

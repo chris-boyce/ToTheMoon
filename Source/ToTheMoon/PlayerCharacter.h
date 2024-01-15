@@ -17,6 +17,8 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE(FPlayerIsDead);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FFloatStatUpdate, float, OldValue, float, NewValue, float, MaxValue);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FKeyWalletAction, FString, KeyString, EPlayerKeyAction, KeyAction, bool, IsSuccess);
 
+class UQuestBase;
+
 UCLASS()
 class TOTHEMOON_API APlayerCharacter : public ACharacter
 {
@@ -116,7 +118,10 @@ public:
 	UFUNCTION(BlueprintCallable, Category="Player|Movement")
 	void SetRunning(bool IsRunning);
 
+	///Quests ----------------------------
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Player|Quests")
+	TArray<TSubclassOf<UQuestBase>> QuestArray;
 
 	
 	
