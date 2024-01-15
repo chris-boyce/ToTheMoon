@@ -2,7 +2,8 @@
 
 
 #include "PlayerCharacter.h"
-
+#include "PlayerQuestComponent.h"
+#include "QuestBase.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/PawnMovementComponent.h"
 
@@ -11,6 +12,8 @@ APlayerCharacter::APlayerCharacter()
 	PrimaryActorTick.bCanEverTick = true;
 	SetActorTickInterval(0.5f);
 	SetActorTickEnabled(true);
+
+	QuestComponent = CreateDefaultSubobject<UPlayerQuestComponent>(TEXT("QuestComponent"));
 }
 
 void APlayerCharacter::BeginPlay()
@@ -21,7 +24,9 @@ void APlayerCharacter::BeginPlay()
 		GetMovementComponent()->GetNavAgentPropertiesRef().bCanCrouch = true;
 	}
 
+	
 }
+
 
 void APlayerCharacter::Tick(float DeltaTime)
 {

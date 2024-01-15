@@ -8,13 +8,12 @@ void UQuestBase::StartQuest()
 	if (QuestStatus == EQuestStatus::NotStarted)
 	{
 		QuestStatus = EQuestStatus::InProgress;
+		UE_LOG(LogTemp, Warning, TEXT("Quest In Progress"));
 	}
 }
 
-void UQuestBase::CompleteStep(int32 StepIndex)
+void UQuestBase::CompleteStep()
 {
-	if (QuestStatus == EQuestStatus::InProgress && StepIndex >= 0 && StepIndex < QuestSteps.Num())
-	{
-
-	}
+	UE_LOG(LogTemp, Warning, TEXT("Step Completed"));
+	StepCompleted.Broadcast();
 }

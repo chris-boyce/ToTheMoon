@@ -6,6 +6,7 @@
 #include "GameFramework/Character.h"
 #include "PlayerCharacter.generated.h"
 
+class UPlayerQuestComponent;
 UENUM(BlueprintType)
 enum class EPlayerKeyAction : uint8
 {
@@ -16,8 +17,6 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FIntStatUpdate, int32, OldValue, 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FPlayerIsDead);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FFloatStatUpdate, float, OldValue, float, NewValue, float, MaxValue);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FKeyWalletAction, FString, KeyString, EPlayerKeyAction, KeyAction, bool, IsSuccess);
-
-class UQuestBase;
 
 UCLASS()
 class TOTHEMOON_API APlayerCharacter : public ACharacter
@@ -118,13 +117,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category="Player|Movement")
 	void SetRunning(bool IsRunning);
 
-	///Quests ----------------------------
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Player|Quests")
-	TArray<TSubclassOf<UQuestBase>> QuestArray;
-
-	
-	
+	//Components --------------------------
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Player|Components")
+	UPlayerQuestComponent* QuestComponent;
 
 private:
 	//Health
