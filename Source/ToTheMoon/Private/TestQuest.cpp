@@ -51,8 +51,6 @@ void UTestQuest::HandleCorrectItem()
 	AmountCollected++;
 	if(AmountCollected == QuestItemList.ItemCollectionAmount)
 	{
-		//If they have got them all it will return the Step has been completed
-		//TODO : Add Multi Step
 		CompleteStep();
 	}
 }

@@ -18,17 +18,6 @@ enum class EQuestStatus : uint8
 	Failed
 };
 
-USTRUCT(BlueprintType)
-struct FQuestStep
-{
-	GENERATED_BODY()
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	FString StepDescription;
-	
-};
-
-
 UCLASS()
 class TOTHEMOON_API UQuestBase : public UObject
 {
@@ -48,7 +37,7 @@ public:
 	virtual void StartQuest();
 	
 	UFUNCTION(BlueprintCallable)
-	void CompleteStep();
+	virtual void CompleteStep();
 
 	UPROPERTY()
 	FStepCompleted StepCompleted;
