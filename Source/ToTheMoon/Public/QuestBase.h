@@ -8,6 +8,7 @@
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FStepCompleted);
 
+
 UENUM(BlueprintType)
 enum class EQuestStatus : uint8
 {
@@ -36,6 +37,9 @@ class TOTHEMOON_API UQuestBase : public UObject
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	FString QuestName;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FString QuestDescription;
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	EQuestStatus QuestStatus;
@@ -48,4 +52,6 @@ public:
 
 	UPROPERTY()
 	FStepCompleted StepCompleted;
+
+	
 };

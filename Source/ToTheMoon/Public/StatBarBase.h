@@ -63,8 +63,7 @@ private:
 	UPROPERTY(EditAnywhere, Category="Stat Bar")
 	bool IsFullSize = true;
 	
-	UPROPERTY(EditAnywhere, Category="Stat Bar|Testing",
-		meta=(ClampMin=0, UIMin=0, ClampMax=1, UIMax=1, Units="Percent"))
+	UPROPERTY(EditAnywhere, Category="Stat Bar|Testing", meta=(ClampMin=0, UIMin=0, ClampMax=1, UIMax=1, Units="Percent"))
 	float CurrentPercentage = 0.f;
 	
 	UPROPERTY(EditAnywhere, Category="Stat Bar|Testing", meta=(ClampMin=0, UIMin=0))

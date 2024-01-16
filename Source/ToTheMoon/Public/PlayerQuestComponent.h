@@ -6,6 +6,10 @@
 #include "Components/ActorComponent.h"
 #include "PlayerQuestComponent.generated.h"
 
+
+class UQuestDisplayBase;
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FUpdateQuest);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_FourParams(FUpdateDisplay, FString, QuestName, FString, QuestDescription, int, CurrentScore ,int ,FinalScore);
 class UQuestBase;
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class TOTHEMOON_API UPlayerQuestComponent : public UActorComponent
@@ -30,5 +34,12 @@ public:
 
 	UFUNCTION()
 	void HandleStepCompleted();
+
+	FUpdateQuest FUpdateQuest;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category= "Quest Display")
+	TArray<UQuestDisplayBase*> QuestDisplayBaseArray;
+
+	FUpdateDisplay FUpdateDisplay;
 		
 };

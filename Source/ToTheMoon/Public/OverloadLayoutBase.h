@@ -6,6 +6,7 @@
 #include "WidgetBase.h"
 #include "OverloadLayoutBase.generated.h"
 
+class UQuestDisplayBase;
 class UImage;
 class UHealthStaminaBarBase;
 class UFPSCounterBase;
@@ -20,6 +21,9 @@ public:
 
 	UPROPERTY(BlueprintReadOnly, Category="Constituent Controls", meta=(BindWidget))
 	TObjectPtr<UFPSCounterBase> FPSCounterWidget = nullptr;
+
+	UPROPERTY(BlueprintReadOnly, Category="Constituent Controls", meta=(BindWidget))
+	TObjectPtr<UQuestDisplayBase> QuestDisplayBase = nullptr;
 	
 	void VisibilityToggle();
 	

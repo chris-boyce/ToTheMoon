@@ -8,6 +8,7 @@
 #include "ModerateLayoutBase.h"
 #include "OverloadLayoutBase.h"
 #include "PlayerCharacter.h"
+#include "PlayerQuestComponent.h"
 #include "StatBarBase.h"
 
 
@@ -36,6 +37,14 @@ void AFirstPersonHUD::BeginPlay()
 	if (APlayerController* PlayerController = GetOwningPlayerController())
 	{
 		PlayerCharacter = Cast<APlayerCharacter>(PlayerController->GetPawn());
+		UPlayerQuestComponent* PlayerQuestComponent = PlayerCharacter->FindComponentByClass<UPlayerQuestComponent>();
+		if(PlayerQuestComponent)
+		{
+			//QUEST BINDS TO THE QUEST UI IS HERE !!!!
+			PlayerQuestComponent->FUpdateDisplay.AddDynamic(ModerateLayoutWidget->QuestDisplayBase, &UQuestDisplayBase::UpdateQuestWidget);
+			PlayerQuestComponent->FUpdateDisplay.AddDynamic(OverloadLayoutWidget->QuestDisplayBase, &UQuestDisplayBase::UpdateQuestWidget);
+		}
+		
 	}
 	
 	checkf(PlayerCharacter, TEXT("Unable to get a reference to the player character"));
