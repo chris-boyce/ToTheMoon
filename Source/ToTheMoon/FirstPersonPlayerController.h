@@ -40,6 +40,11 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="First Person Player|UI")
 	TObjectPtr<UInputAction> ActionCycleUI;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="First Person Player|Character Movement")
+	TObjectPtr<UInputAction> ActionInteract;
+
+	
+
 	//Input Mapping
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="First Person Player|Character Movement")
 	TObjectPtr<UInputMappingContext> InputMappingContext = nullptr;
@@ -57,6 +62,7 @@ protected:
 	void HandleSprint();
 	void HandleCrouch();
 	void HandleCycleUIMode();
+	void HandleInteract();
 
 private:
 	UPROPERTY()

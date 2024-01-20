@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "PlayerInteractionComponent.h"
 #include "GameFramework/Character.h"
 #include "PlayerCharacter.generated.h"
 
@@ -70,9 +71,7 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category="Player|Stamina")
 	void SetStaminaRegenFactor(float NewStaminaRegenFactor);
-
 	
-
 	//Keys Functions
 	UFUNCTION(BlueprintCallable, Category="Player|Keys")
 	void AddKey(FString KeyToAdd);
@@ -120,6 +119,11 @@ public:
 	//Components --------------------------
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Player|Components")
 	UPlayerQuestComponent* QuestComponent;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Player|Components")
+	UPlayerInteractionComponent* InteractionComponent;
+
+	
 
 private:
 	//Health

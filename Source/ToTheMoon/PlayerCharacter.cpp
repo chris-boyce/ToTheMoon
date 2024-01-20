@@ -14,6 +14,7 @@ APlayerCharacter::APlayerCharacter()
 	SetActorTickEnabled(true);
 
 	QuestComponent = CreateDefaultSubobject<UPlayerQuestComponent>(TEXT("QuestComponent"));
+	InteractionComponent = CreateDefaultSubobject<UPlayerInteractionComponent>(TEXT("InteractionComponent"));
 }
 
 void APlayerCharacter::BeginPlay()

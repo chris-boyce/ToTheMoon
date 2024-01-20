@@ -43,12 +43,15 @@ void AFirstPersonPlayerController::OnPossess(APawn* aPawn)
 	if(ActionSprint)
 	{
 		EnhancedInputComponent->BindAction(ActionSprint, ETriggerEvent::Triggered, this, &AFirstPersonPlayerController::HandleSprint);
-		UE_LOG(LogTemp, Warning, TEXT("Sprint Binded"));
 	}
 	if(ActionCycleUI)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Action Cycle"));
 		EnhancedInputComponent->BindAction(ActionCycleUI, ETriggerEvent::Triggered, this, &AFirstPersonPlayerController::HandleCycleUIMode);
+	}
+	if(ActionInteract)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Action Interact Bound"));
+		EnhancedInputComponent->BindAction(ActionInteract, ETriggerEvent::Triggered, this, &AFirstPersonPlayerController::HandleInteract);
 	}
 	
 }
@@ -111,5 +114,13 @@ void AFirstPersonPlayerController::HandleCycleUIMode()
 	if(PlayerHUD)
 	{
 		PlayerHUD->CycleToNextViewMode();
+	}
+}
+
+void AFirstPersonPlayerController::HandleInteract()
+{
+	if(PlayerCharacter)
+	{
+		PlayerCharacter->InteractionComponent->FireInteraction();
 	}
 }
