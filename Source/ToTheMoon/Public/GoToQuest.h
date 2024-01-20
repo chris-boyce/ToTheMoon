@@ -6,19 +6,26 @@
 #include "QuestBase.h"
 #include "GoToQuest.generated.h"
 
-UCLASS()
+class ALocationBase;
+UCLASS(Blueprintable)
 class TOTHEMOON_API UGoToQuest : public UQuestBase
 {
 	GENERATED_BODY()
 	virtual void StartQuest() override;
 	virtual void CompleteStep() override;
 public:
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	TArray<AActor*> Locations;
-
 	UFUNCTION()
 	void LocationCollision();
+
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<ALocationBase> Location = nullptr;
 	
 	UFUNCTION()
 	void SpawnLocationCollider(int LocationInt);
+
+	UPROPERTY()
+	UWorld* World;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TArray<FVector> SpawnPoints;
 };

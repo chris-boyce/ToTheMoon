@@ -30,5 +30,7 @@ void ALocationBase::NotifyActorBeginOverlap(AActor* OtherActor)
 {
 	UE_LOG(LogTemp, Warning, TEXT("OVERLAP"));
 	Super::NotifyActorBeginOverlap(OtherActor);
+	PlayerOverlap.Broadcast();
+	Destroy();
 }
 
