@@ -16,13 +16,14 @@ void UPlayerQuestComponent::BeginPlay()
 	///THIS IS FOR TESTING
 	for (int32 Index = 0; Index < TESTQUEUE.Num(); ++Index)
 	{
-		QuestQueue.Enqueue(TESTQUEUE[Index]);
+		QuestQueue.Enqueue(NewObject<UQuestBase>(this,TESTQUEUE[Index]));
 		UE_LOG(LogTemp, Warning, TEXT("Added To Que"));
 	}
 	/// - - - - - - - - - - - -
 	if(QuestQueue.Peek())
 	{
-		UQuestBase* FirstQuestInstance = NewObject<UQuestBase>(this, QuestQueue.Peek()->Get());
+		UQuestBase* FirstQuestInstance;
+		QuestQueue.Peek(FirstQuestInstance);
 		FirstQuestInstance->StartQuest();
 		FirstQuestInstance->StepCompleted.AddDynamic(this, &UPlayerQuestComponent::HandleStepCompleted);
 		UE_LOG(LogTemp, Warning, TEXT("Quest Started"));
@@ -43,10 +44,12 @@ void UPlayerQuestComponent::BeginPlay()
 
 void UPlayerQuestComponent::HandleStepCompleted()
 {
+	
 	QuestQueue.Pop();
 	if(QuestQueue.Peek())
 	{
-		UQuestBase* FirstQuestInstance = NewObject<UQuestBase>(this, QuestQueue.Peek()->Get());
+		UQuestBase* FirstQuestInstance;
+		QuestQueue.Peek(FirstQuestInstance);
 		FirstQuestInstance->StartQuest();
 		FirstQuestInstance->StepCompleted.AddDynamic(this, &UPlayerQuestComponent::HandleStepCompleted);
 		UE_LOG(LogTemp, Warning, TEXT("Next Quest"));
@@ -62,6 +65,15 @@ void UPlayerQuestComponent::HandleStepCompleted()
 		FUpdateDisplay.Broadcast(NoMissionName, NoMissionDescription, 0 , 0 );
 	}
 	
+	
+}
+
+void UPlayerQuestComponent::AddQuest(UQuestBase* Quest)
+{
+	QuestQueue.Enqueue(Quest);
+	Quest->StepCompleted.AddDynamic(this, &UPlayerQuestComponent::HandleStepCompleted);
+	FUpdateDisplay.Broadcast(Quest->QuestName, Quest->QuestDescription , 0 ,0);
+	FUpdateQuest.Broadcast();
 }
 
 void UPlayerQuestComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)

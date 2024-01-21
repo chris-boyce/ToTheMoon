@@ -30,7 +30,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Player|Quests")
 	TArray<TSubclassOf<UQuestBase>> TESTQUEUE;
 	
-	TQueue<TSubclassOf<UQuestBase>> QuestQueue;
+	TQueue<UQuestBase*> QuestQueue;
 
 	UFUNCTION()
 	void HandleStepCompleted();
@@ -39,6 +39,9 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category= "Quest Display")
 	TArray<UQuestDisplayBase*> QuestDisplayBaseArray;
+
+	UFUNCTION()
+	void AddQuest(UQuestBase* Quest);
 
 	FUpdateDisplay FUpdateDisplay;
 		

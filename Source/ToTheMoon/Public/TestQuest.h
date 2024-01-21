@@ -26,7 +26,6 @@ class TOTHEMOON_API UTestQuest : public UQuestBase
 {
 	GENERATED_BODY()
 public:
-	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TArray<FString> QuestRewards;
 	
@@ -52,6 +51,8 @@ public:
 
 	UPROPERTY()
 	int AmountCollected = 0;
+
+	virtual void InitQuestVariables(const FCollectionQuest& Parameters) override;
 
 	
 };

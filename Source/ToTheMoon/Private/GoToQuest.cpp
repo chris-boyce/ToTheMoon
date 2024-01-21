@@ -45,3 +45,9 @@ void UGoToQuest::SpawnLocationCollider(int LocationInt)
 	ALocationBase* SpawnedItem = World->SpawnActor<ALocationBase>(Location, SpawnLocation , SpawnRotation);
 	SpawnedItem->PlayerOverlap.AddDynamic(this, &UGoToQuest::LocationCollision);
 }
+
+void UGoToQuest::InitQuestVariables(const FLocationQuest& Parameters)
+{
+	Super::InitQuestVariables(Parameters);
+	StartQuest();
+}

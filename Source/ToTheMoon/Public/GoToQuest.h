@@ -6,6 +6,16 @@
 #include "QuestBase.h"
 #include "GoToQuest.generated.h"
 
+USTRUCT(BlueprintType)
+struct FLocationQuest
+{
+	GENERATED_BODY()
+public:
+	UPROPERTY()
+	FString LocationName;
+	
+};
+
 class ALocationBase;
 UCLASS(Blueprintable)
 class TOTHEMOON_API UGoToQuest : public UQuestBase
@@ -28,4 +38,6 @@ public:
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TArray<FVector> SpawnPoints;
+
+	virtual void InitQuestVariables(const FLocationQuest& Parameters) override;
 };

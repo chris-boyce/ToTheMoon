@@ -2,8 +2,10 @@
 
 
 #include "TestQuest.h"
-
 #include "ItemSpawnPoint.h"
+
+
+
 
 void UTestQuest::StartQuest()
 {
@@ -53,4 +55,12 @@ void UTestQuest::HandleCorrectItem()
 	{
 		CompleteStep();
 	}
+}
+
+void UTestQuest::InitQuestVariables(const FCollectionQuest& Parameters)
+{
+	Super::InitQuestVariables(Parameters);
+	QuestItemList.QuestItem = Parameters.QuestItem;
+	QuestItemList.ItemCollectionAmount = Parameters.ItemCollectionAmount;
+	StartQuest();
 }

@@ -6,6 +6,9 @@
 #include "UObject/NoExportTypes.h"
 #include "QuestBase.generated.h"
 
+struct FLocationQuest;
+struct FCollectionQuest;
+
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FStepCompleted);
 
 
@@ -17,6 +20,12 @@ enum class EQuestStatus : uint8
 	Completed,
 	Failed
 };
+UENUM(BlueprintType)
+enum class EQuestType : uint8
+{
+	QT_CollectItems,
+	QT_GoTo,
+};
 
 UCLASS()
 class TOTHEMOON_API UQuestBase : public UObject
@@ -26,6 +35,9 @@ class TOTHEMOON_API UQuestBase : public UObject
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	FString QuestName;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	EQuestType QuestType;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	FString QuestDescription;
@@ -41,6 +53,10 @@ public:
 
 	UPROPERTY()
 	FStepCompleted StepCompleted;
+	
+	virtual void InitQuestVariables(const FCollectionQuest& Parameters) {}
 
+	virtual void InitQuestVariables(const FLocationQuest& Parameters) {}
+	
 	
 };

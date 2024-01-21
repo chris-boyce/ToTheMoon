@@ -24,7 +24,6 @@ void APlayerCharacter::BeginPlay()
 	{
 		GetMovementComponent()->GetNavAgentPropertiesRef().bCanCrouch = true;
 	}
-
 	
 }
 
@@ -104,6 +103,11 @@ void APlayerCharacter::SetRunning(bool IsRunning)
 {
 	bIsRunning = IsRunning;
 	GetCharacterMovement()->MaxWalkSpeed = bIsRunning ? RunningMaxWalkSpeed : NormalMaxWalkSpeed;
+}
+
+UPlayerQuestComponent* APlayerCharacter::GetQuestComponent()
+{
+	return QuestComponent;
 }
 
 int APlayerCharacter::GetHealth()

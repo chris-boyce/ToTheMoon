@@ -116,9 +116,14 @@ public:
 	UFUNCTION(BlueprintCallable, Category="Player|Movement")
 	void SetRunning(bool IsRunning);
 
+
+	
 	//Components --------------------------
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Player|Components")
 	UPlayerQuestComponent* QuestComponent;
+	
+	UFUNCTION()
+	UPlayerQuestComponent* GetQuestComponent();
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Player|Components")
 	UPlayerInteractionComponent* InteractionComponent;
