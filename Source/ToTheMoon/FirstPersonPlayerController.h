@@ -43,6 +43,9 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="First Person Player|Character Movement")
 	TObjectPtr<UInputAction> ActionInteract;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="First Person Player|Character Movement")
+	TObjectPtr<UInputAction> ActionFire;
+
 	
 
 	//Input Mapping
@@ -50,6 +53,14 @@ public:
 	TObjectPtr<UInputMappingContext> InputMappingContext = nullptr;
 
 
+	UFUNCTION()
+	void AllowInput(bool bAllowMove);
+
+	UFUNCTION()
+	void MouseVisibility(bool bIsVisable);
+
+	UFUNCTION()
+	APlayerCharacter* GetPlayerCharacter();
 
 	
 protected:
@@ -63,6 +74,7 @@ protected:
 	void HandleCrouch();
 	void HandleCycleUIMode();
 	void HandleInteract();
+	void HandleFire();
 
 private:
 	UPROPERTY()
@@ -73,6 +85,10 @@ private:
 
 	UPROPERTY()
 	AFirstPersonHUD* PlayerHUD = nullptr;
+	
+	UPROPERTY()
+	bool bPlayerCanMove = true;
+	
 	
 	
 };

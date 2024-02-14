@@ -28,14 +28,14 @@ void AQuestItemBase::NotifyHit(UPrimitiveComponent* MyComp, AActor* Other, UPrim
 	bool bSelfMoved, FVector HitLocation, FVector HitNormal, FVector NormalImpulse, const FHitResult& Hit)
 {
 	Super::NotifyHit(MyComp, Other, OtherComp, bSelfMoved, HitLocation, HitNormal, NormalImpulse, Hit);
-	APlayerController* PlayerController = UGameplayStatics::GetPlayerController(GetWorld(), 0); // Assuming player index 0
+	
+}
 
-	if (PlayerController && Other == PlayerController->GetPawn())
-	{
-		UE_LOG(LogTemp, Warning, TEXT("Overlap with Player Character detected"));
-		PlayerHit.Broadcast(GetClass());
-		Destroy();
-	}
+void AQuestItemBase::Interact_Implementation()
+{
+	IInteractable::Interact_Implementation();
+	PlayerHit.Broadcast(GetClass());
+	Destroy();
 }
 
 

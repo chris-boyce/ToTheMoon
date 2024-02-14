@@ -1,9 +1,10 @@
 //Semester 2 Christopher Boyce : TTM Project
 
-
 #include "PlayerCharacter.h"
+#include "Gun.h"
 #include "PlayerQuestComponent.h"
 #include "QuestBase.h"
+#include "Camera/CameraComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/PawnMovementComponent.h"
 
@@ -24,7 +25,8 @@ void APlayerCharacter::BeginPlay()
 	{
 		GetMovementComponent()->GetNavAgentPropertiesRef().bCanCrouch = true;
 	}
-	
+	CameraComponent = FindComponentByClass<UCameraComponent>();
+	AttachGun();
 }
 
 
@@ -52,11 +54,6 @@ void APlayerCharacter::Tick(float DeltaTime)
 	}
 	bHasRan = false;
 	bHasJumped = false;
-
-	GEngine->AddOnScreenDebugMessage(-1, 0.49f, FColor::Silver, *(FString::Printf(TEXT("Movement - IsCrouched:%d | IsSprinting:%d"), bIsCrouched, bIsRunning)));
-	GEngine->AddOnScreenDebugMessage(-1, 0.49f, FColor::Red,*(FString::Printf(TEXT("Health - Current:%d | Maximum:%d"), CurrentHealth, MaxHealth)));
-	GEngine->AddOnScreenDebugMessage(-1, 0.49f, FColor::Green,*(FString::Printf(TEXT("Stamina - Current:%f | Maximum:%f"), CurrentStamina, MaxStamina)));
-	GEngine->AddOnScreenDebugMessage(-1, 0.49f, FColor::Orange,*(FString::Printf(TEXT("Keys - %d Keys Currently held"), KeyWallet.Num())));
 }
 
 void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -202,5 +199,18 @@ void APlayerCharacter::RemoveKey(FString KeyToRemove)
 bool APlayerCharacter::IsPlayerCarryingKey(FString DesiredKey)
 {
 	return KeyWallet.Contains(DesiredKey);
+}
+void APlayerCharacter::AttachGun()
+{
+	FActorSpawnParameters SpawnParams;
+	SpawnParams.Owner = this;
+	SpawnParams.Instigator = GetInstigator();
+	
+	Pistol = GetWorld()->SpawnActor<AGun>(PistolClass, GetActorLocation(), GetActorRotation(), SpawnParams);
+	if(Pistol)
+	{
+		Pistol->AttachToComponent(CameraComponent, FAttachmentTransformRules::KeepWorldTransform);
+	}
+	
 }
 
