@@ -7,6 +7,8 @@
 #include "GameFramework/Character.h"
 #include "PlayerCharacter.generated.h"
 
+class UCameraComponent;
+class AGun;
 class UPlayerQuestComponent;
 UENUM(BlueprintType)
 enum class EPlayerKeyAction : uint8
@@ -41,11 +43,12 @@ public:
 
 	virtual void AddMovementInput(FVector WorldDirection, float ScaleValue = 1.0f, bool bForce = false) override;
 
+	UFUNCTION()
+	void AttachGun();
+
 	UFUNCTION(BlueprintCallable,Category="Player|Stats")
 	void BroadcastCurrentStats();
 	
-
-
 	//Health Functions
 	UFUNCTION(BlueprintPure, Category="Player|Health")
 	int GetHealth();
@@ -121,6 +124,15 @@ public:
 	//Components --------------------------
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Player|Components")
 	UPlayerQuestComponent* QuestComponent;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Player|Components")
+	UCameraComponent* CameraComponent;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Player|Components")
+	TSubclassOf<AGun> PistolClass = nullptr;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Player|Components")
+	AGun* Pistol = nullptr;
 	
 	UFUNCTION()
 	UPlayerQuestComponent* GetQuestComponent();
@@ -138,8 +150,8 @@ private:
 
 	//Stamina
 	static constexpr float  MaxStamina = 200;
-	static constexpr float JumpStaminaCost = 25;
-	static constexpr float RunStaminaCost = 10;
+	static constexpr float JumpStaminaCost = 10;
+	static constexpr float RunStaminaCost = 5;
 	static constexpr float RestStaminaRegen = 5;
 	float CurrentStamina = MaxStamina;
 	float StaminaRegenFactor = 1;

@@ -8,9 +8,10 @@ public class ToTheMoon : ModuleRules
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 	
-		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "EnhancedInput" , "UMG", "Slate", "SlateCore", "Json", "JsonUtilities"});
-
-		PrivateDependencyModuleNames.AddRange(new string[] {  });
+		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "EnhancedInput" , "UMG", "Slate", "SlateCore", "Json", "JsonUtilities", "Niagara"});
+		
+		PublicAdditionalLibraries.Add("C:/Users/skyog/Documents/GitHub/LlamaReupload/Libraries/llama.lib");
+		RuntimeDependencies.Add("C:/Users/skyog/Documents/GitHub/LlamaReupload/Binaries/Win64/llama.dll");
 
 		// Uncomment if you are using Slate UI
 		// PrivateDependencyModuleNames.AddRange(new string[] { "Slate", "SlateCore" });

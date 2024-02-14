@@ -10,6 +10,7 @@ class UQuestDisplayBase;
 class UImage;
 class UHealthStaminaBarBase;
 class UFPSCounterBase;
+class UMinimap;
 
 UCLASS(Abstract)
 class TOTHEMOON_API UOverloadLayoutBase : public UWidgetBase
@@ -24,6 +25,9 @@ public:
 
 	UPROPERTY(BlueprintReadOnly, Category="Constituent Controls", meta=(BindWidget))
 	TObjectPtr<UQuestDisplayBase> QuestDisplayBase = nullptr;
+
+	UPROPERTY(BlueprintReadOnly, Category="Constituent Controls", meta=(BindWidget))
+	TObjectPtr<UMinimap> MiniMapDisplay = nullptr;
 	
 	void VisibilityToggle();
 	

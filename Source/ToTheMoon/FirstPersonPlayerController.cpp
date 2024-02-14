@@ -5,7 +5,32 @@
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "FirstPersonHUD.h"
+#include "Gun.h"
 #include "PlayerCharacter.h"
+
+void AFirstPersonPlayerController::AllowInput(bool bAllowMove)
+{
+	bPlayerCanMove = bAllowMove;
+}
+
+void AFirstPersonPlayerController::MouseVisibility(bool bIsVisable)
+{
+	if (bIsVisable)
+	{
+		bShowMouseCursor = true;
+		SetInputMode(FInputModeGameAndUI());
+	}
+	else
+	{
+		bShowMouseCursor = false;
+		SetInputMode(FInputModeGameOnly());
+	}
+}
+
+APlayerCharacter* AFirstPersonPlayerController::GetPlayerCharacter()
+{
+	return PlayerCharacter;
+}
 
 void AFirstPersonPlayerController::OnPossess(APawn* aPawn)
 {
@@ -18,6 +43,7 @@ void AFirstPersonPlayerController::OnPossess(APawn* aPawn)
 
 	PlayerHUD = Cast<AFirstPersonHUD>(GetHUD());
 	checkf(PlayerHUD, TEXT("Unable to get reference to the HUD"));
+	
 
 	UEnhancedInputLocalPlayerSubsystem* InputSubsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(GetLocalPlayer());
 	checkf(InputSubsystem, TEXT("Subsystem Not Setup"));
@@ -50,8 +76,11 @@ void AFirstPersonPlayerController::OnPossess(APawn* aPawn)
 	}
 	if(ActionInteract)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Action Interact Bound"));
 		EnhancedInputComponent->BindAction(ActionInteract, ETriggerEvent::Triggered, this, &AFirstPersonPlayerController::HandleInteract);
+	}
+	if(ActionFire)
+	{
+		EnhancedInputComponent->BindAction(ActionFire, ETriggerEvent::Triggered, this, &AFirstPersonPlayerController::HandleFire);
 	}
 	
 }
@@ -64,6 +93,10 @@ void AFirstPersonPlayerController::OnUnPossess()
 
 void AFirstPersonPlayerController::HandleLook(const FInputActionValue& InputActionValue)
 {
+	if(!bPlayerCanMove)
+	{
+		return;
+	}
 	const FVector2D LookVector = InputActionValue.Get<FVector2D>();
 	AddYawInput(LookVector.X);
 	AddPitchInput(LookVector.Y);
@@ -71,6 +104,10 @@ void AFirstPersonPlayerController::HandleLook(const FInputActionValue& InputActi
 
 void AFirstPersonPlayerController::HandleMove(const FInputActionValue& InputActionValue)
 {
+	if(!bPlayerCanMove)
+	{
+		return;
+	}
 	const FVector2D MovementVector = InputActionValue.Get<FVector2D>();
 	if (PlayerCharacter)
 	{
@@ -81,6 +118,14 @@ void AFirstPersonPlayerController::HandleMove(const FInputActionValue& InputActi
 
 void AFirstPersonPlayerController::HandleJump()
 {
+	if(!bPlayerCanMove)
+	{
+		return;
+	}
+	if(!bPlayerCanMove)
+	{
+		return;
+	}
 	if(PlayerCharacter)
 	{
 		PlayerCharacter->UnCrouch();
@@ -90,6 +135,10 @@ void AFirstPersonPlayerController::HandleJump()
 
 void AFirstPersonPlayerController::HandleSprint()
 {
+	if(!bPlayerCanMove)
+	{
+		return;
+	}
 	if (PlayerCharacter)
 	{
 		PlayerCharacter->ToggleRunning();
@@ -98,6 +147,10 @@ void AFirstPersonPlayerController::HandleSprint()
 
 void AFirstPersonPlayerController::HandleCrouch()
 {
+	if(!bPlayerCanMove)
+	{
+		return;
+	}
 	if(PlayerCharacter && PlayerCharacter->bIsCrouched)
 	{
 		PlayerCharacter->UnCrouch();
@@ -110,7 +163,10 @@ void AFirstPersonPlayerController::HandleCrouch()
 
 void AFirstPersonPlayerController::HandleCycleUIMode()
 {
-	
+	if(!bPlayerCanMove)
+	{
+		return;
+	}
 	if(PlayerHUD)
 	{
 		PlayerHUD->CycleToNextViewMode();
@@ -119,8 +175,25 @@ void AFirstPersonPlayerController::HandleCycleUIMode()
 
 void AFirstPersonPlayerController::HandleInteract()
 {
+	if(!bPlayerCanMove)
+	{
+		return;
+	}
 	if(PlayerCharacter)
 	{
 		PlayerCharacter->InteractionComponent->FireInteraction();
 	}
+}
+
+void AFirstPersonPlayerController::HandleFire()
+{
+	if(!bPlayerCanMove)
+	{
+		return;
+	}
+	if(PlayerCharacter->Pistol)
+	{
+		PlayerCharacter->Pistol->Fire();
+	}
+	
 }
