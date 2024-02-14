@@ -3480,7 +3480,7 @@
 	],
 	"RuntimeDependencies": [
 		{
-			"Path": "$(ProjectDir)/Binaries/Win64/llama.dll",
+			"Path": "C:\\Users\\skyog\\Documents\\GitHub\\LlamaReupload\\Binaries\\Win64\\llama.dll",
 			"Type": "NonUFS"
 		},
 		{
