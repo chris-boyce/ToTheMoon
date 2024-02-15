@@ -46,6 +46,9 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="First Person Player|Character Movement")
 	TObjectPtr<UInputAction> ActionFire;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="First Person Player|Character Movement")
+	TObjectPtr<UInputAction> ActionToggleFlashlight;
+
 	
 
 	//Input Mapping
@@ -75,6 +78,7 @@ protected:
 	void HandleCycleUIMode();
 	void HandleInteract();
 	void HandleFire();
+	void HandleFlashlight();
 
 private:
 	UPROPERTY()

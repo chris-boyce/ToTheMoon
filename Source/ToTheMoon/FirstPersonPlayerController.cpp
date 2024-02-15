@@ -82,6 +82,10 @@ void AFirstPersonPlayerController::OnPossess(APawn* aPawn)
 	{
 		EnhancedInputComponent->BindAction(ActionFire, ETriggerEvent::Triggered, this, &AFirstPersonPlayerController::HandleFire);
 	}
+	if(ActionToggleFlashlight)
+	{
+		EnhancedInputComponent->BindAction(ActionToggleFlashlight, ETriggerEvent::Triggered, this, &AFirstPersonPlayerController::HandleFlashlight);
+	}
 	
 }
 
@@ -196,4 +200,16 @@ void AFirstPersonPlayerController::HandleFire()
 		PlayerCharacter->Pistol->Fire();
 	}
 	
+}
+
+void AFirstPersonPlayerController::HandleFlashlight()
+{
+	if(!bPlayerCanMove)
+	{
+		return;
+	}
+	if(PlayerCharacter)
+	{
+		PlayerCharacter->ToggleFlashlight();
+	}
 }

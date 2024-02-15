@@ -4,6 +4,7 @@
 #include "Gun.h"
 #include "PlayerQuestComponent.h"
 #include "QuestBase.h"
+#include "Components/PointLightComponent.h"
 #include "Camera/CameraComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/PawnMovementComponent.h"
@@ -100,6 +101,19 @@ void APlayerCharacter::SetRunning(bool IsRunning)
 {
 	bIsRunning = IsRunning;
 	GetCharacterMovement()->MaxWalkSpeed = bIsRunning ? RunningMaxWalkSpeed : NormalMaxWalkSpeed;
+}
+
+void APlayerCharacter::ToggleFlashlight()
+{
+	if(Flashlight->Intensity > 10)
+	{
+		Flashlight->SetIntensity(0);
+	}
+	else
+	{
+		Flashlight->SetIntensity(1000);
+	}
+	
 }
 
 UPlayerQuestComponent* APlayerCharacter::GetQuestComponent()

@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Gun.h"
 #include "PlayerInteractionComponent.h"
 #include "GameFramework/Character.h"
 #include "PlayerCharacter.generated.h"
@@ -119,6 +120,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category="Player|Movement")
 	void SetRunning(bool IsRunning);
 
+	UFUNCTION(BlueprintCallable, Category="Player|Flashlight")
+	void ToggleFlashlight();
+
 
 	
 	//Components --------------------------
@@ -139,6 +143,9 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Player|Components")
 	UPlayerInteractionComponent* InteractionComponent;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Player|Flashlight")
+	UPointLightComponent* Flashlight;
 
 	
 
