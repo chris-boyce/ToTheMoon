@@ -27,7 +27,7 @@ public:
 	UPROPERTY(BlueprintAssignable, Category = "OpenAI")
 	FOnResponseRecievedPin Finished;
 
-private:
+public:
 
 	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true"), Category = "OpenAI")
 		static UOpenAICallChat* OpenAICallChat(FChatSettings chatSettings);
