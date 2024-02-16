@@ -5,18 +5,17 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "LocationBase.generated.h"
+class UPaperSpriteComponent;
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOverlapPlayer);
-UCLASS(Abstract)
+UCLASS()
 class TOTHEMOON_API ALocationBase : public AActor
 {
 	GENERATED_BODY()
 	
 public:	
-	// Sets default values for this actor's properties
-	ALocationBase();
+	ALocationBase(const FObjectInitializer& ObjectInitializer);
 
 protected:
-	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
 public:	
@@ -26,5 +25,6 @@ public:
 	virtual void NotifyActorBeginOverlap(AActor* OtherActor) override;
 
 	FOverlapPlayer PlayerOverlap;
+	
 
 };

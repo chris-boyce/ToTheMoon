@@ -3,6 +3,7 @@
 
 #include "NPCQuestGiver.h"
 #include "GoToQuest.h"
+#include "GPTComponent.h"
 #include "QuestBase.h"
 #include "TestQuest.h"
 #include "Kismet/GameplayStatics.h"
@@ -20,6 +21,8 @@ void ANPCQuestGiver::BeginPlay()
 	ACharacter* Character = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
 	APlayerCharacter* PlayerCharacter = Cast<APlayerCharacter>(Character);
 	PlayerQuestComponent = PlayerCharacter->GetQuestComponent();
+	GPTComp = FindComponentByClass<UGPTComponent>();
+	GPTComp->OnQuestDataValid.AddDynamic(this, &ANPCQuestGiver::HandleNewQuestData);
 	
 }
 
@@ -38,44 +41,64 @@ void ANPCQuestGiver::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 void ANPCQuestGiver::Interact_Implementation()
 {
 	UE_LOG(LogTemp, Warning, TEXT("Hello I Got the Message"));
-	QuestGive();
+	GPTComp->CreateMission();
 	IInteractable::Interact_Implementation();
 }
 
 void ANPCQuestGiver::QuestGive()
 {
-	FCollectionQuest CollectionQuestData;
-	FLocationQuest GoToQuestData;
-	
-	if(PlayerQuestComponent->QuestQueue.IsEmpty())
+	/*
+	UQuestBase* QuestInstance = NewObject<UQuestBase>(this, QuestTypes[0]); //TODO CHANGE THIS BETWEEN QUEST TYPES
+	switch (QuestInstance->QuestType)
 	{
-		UQuestBase* QuestInstance = NewObject<UQuestBase>(this, QuestTypes[0]); //TODO CHANGE THIS BETWEEN QUEST TYPES
-		switch (QuestInstance->QuestType)
-		{
-		case EQuestType::QT_CollectItems:
+	case EQuestType::Collect:
 			
-			CollectionQuestData.QuestItem = QuestItem[0]; //TODO FIND A WAY TO ADD THE CLASSES
-			CollectionQuestData.ItemCollectionAmount = 1;
-			QuestInstance->InitQuestVariables(CollectionQuestData);
+		CollectionQuestData.QuestItem = QuestItem[0]; //TODO FIND A WAY TO ADD THE CLASSES
+		CollectionQuestData.ItemCollectionAmount = 1;
+		QuestInstance->InitQuestVariables(CollectionQuestData);
 			
-			break;
+		break;
 			
-		case EQuestType::QT_GoTo:
+	case EQuestType::GoTo:
 			
-			QuestInstance->QuestName = "Waypoint Finder";
-			QuestInstance->QuestDescription = "Go To the Waypoint and Stand Under It";
-			GoToQuestData.LocationName = "Here";
-			QuestInstance->InitQuestVariables(GoToQuestData);
+		QuestInstance->QuestName = "Waypoint Finder";
+		QuestInstance->QuestDescription = "Go To the Waypoint and Stand Under It";
+		GoToQuestData.LocationName = "Here";
+		QuestInstance->InitQuestVariables(GoToQuestData);
 			
-			break;
+		break;
 		
-			default:
-				UE_LOG(LogTemp, Warning, TEXT("Unknown quest type"));
-			break;
-		}
-		
+	default:
+		UE_LOG(LogTemp, Warning, TEXT("Unknown quest type"));
+		break;
+	}
+	*/
+	
+}
+
+void ANPCQuestGiver::HandleNewQuestData(EQuestType QuestType, FQuestData QuestData)
+{
+	UE_LOG(LogTemp, Warning, TEXT("HAS RUN THE HANDLE"));
+	
+	switch (QuestType)
+	{
+	case EQuestType::GoTo:
+		UE_LOG(LogTemp, Warning, TEXT("HANDLE HAS RUN GOTO"));
+		QuestInstance = NewObject<UGoToQuest>();
+		QuestInstance->QuestName = QuestData.MissionName;
+		QuestInstance->QuestDescription = QuestData.MissionDescription;
+		QuestInstance->QuestType = QuestType;
+		LocationQuest.LocationName = QuestData.Location;
+		QuestInstance->SetWorldReference(GetWorld());
+		QuestInstance->InitQuestVariables(LocationQuest);
 		PlayerQuestComponent->AddQuest(QuestInstance);
-		
+		break;
+	case EQuestType::Collect:
+		UE_LOG(LogTemp, Warning, TEXT("COLLECT NOT COMPLETED"));
+		break;
+	case EQuestType::Kill:
+		UE_LOG(LogTemp, Warning, TEXT("KILL NOT COMPLETED"));
+		break;
 	}
 	
 }
