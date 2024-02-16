@@ -5,9 +5,11 @@
 #include "CoreMinimal.h"
 #include "Interactable.h"
 #include "PlayerQuestComponent.h"
+#include "QuestBase.h"
 #include "GameFramework/Pawn.h"
 #include "NPCQuestGiver.generated.h"
 
+class UGPTComponent;
 class AQuestItemBase;
 
 UCLASS()
@@ -34,11 +36,11 @@ public:
 
 	UPROPERTY()
 	UPlayerQuestComponent* PlayerQuestComponent;
+	
+	UFUNCTION()
+	void HandleNewQuestData(EQuestType QuestType, FQuestData QuestData);
 
-	UPROPERTY(EditAnywhere)
-	TArray<TSubclassOf<AQuestItemBase>> QuestItem;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="NPC|Quests")
-	TArray<TSubclassOf<UQuestBase>> QuestTypes;
+	UPROPERTY()
+	UGPTComponent* GPTComp;
 
 };

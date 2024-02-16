@@ -34,3 +34,4 @@ void ALocationBase::NotifyActorBeginOverlap(AActor* OtherActor)
 	Destroy();
 }
 
+

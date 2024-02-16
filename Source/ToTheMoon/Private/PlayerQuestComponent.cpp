@@ -13,13 +13,7 @@ UPlayerQuestComponent::UPlayerQuestComponent()
 void UPlayerQuestComponent::BeginPlay()
 {
 	Super::BeginPlay();
-	///THIS IS FOR TESTING
-	for (int32 Index = 0; Index < TESTQUEUE.Num(); ++Index)
-	{
-		QuestQueue.Enqueue(NewObject<UQuestBase>(this,TESTQUEUE[Index]));
-		UE_LOG(LogTemp, Warning, TEXT("Added To Que"));
-	}
-	/// - - - - - - - - - - - -
+	
 	if(QuestQueue.Peek())
 	{
 		UQuestBase* FirstQuestInstance;
