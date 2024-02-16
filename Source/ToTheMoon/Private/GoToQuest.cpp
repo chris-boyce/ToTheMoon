@@ -60,7 +60,8 @@ void UGoToQuest::SpawnLocationCollider(FVector SpawnLocation)
 
 	FActorSpawnParameters SpawnParams;
 	SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-	WorldReference->SpawnActor<AActor>(GeneratedBP->GeneratedClass, SpawnLocation, SpawnRotation, SpawnParams);
+	ALocationBase* LocationBase = WorldReference->SpawnActor<ALocationBase>(GeneratedBP->GeneratedClass, SpawnLocation, SpawnRotation, SpawnParams);
+	LocationBase->PlayerOverlap.AddDynamic(this, &UGoToQuest::CompleteStep);
 	
 	UE_LOG(LogTemp, Warning, TEXT("WE HAVE FINSHED THIS CODE Spawned"));
 }

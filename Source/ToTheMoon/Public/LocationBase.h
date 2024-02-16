@@ -25,13 +25,6 @@ public:
 	virtual void NotifyActorBeginOverlap(AActor* OtherActor) override;
 
 	FOverlapPlayer PlayerOverlap;
-
-	UPROPERTY()
-	UPaperSpriteComponent* PaperSpriteComponent;
-
-	
-	
-
 	
 
 };
