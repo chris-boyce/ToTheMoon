@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "GoToQuest.h"
 #include "Interactable.h"
 #include "PlayerQuestComponent.h"
 #include "QuestBase.h"
@@ -42,5 +43,11 @@ public:
 
 	UPROPERTY()
 	UGPTComponent* GPTComp;
+
+	UPROPERTY()
+	UQuestBase* QuestInstance;
+	
+	UPROPERTY()
+	FLocationQuest LocationQuest;
 
 };

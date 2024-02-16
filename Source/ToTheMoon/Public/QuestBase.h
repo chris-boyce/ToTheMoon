@@ -70,11 +70,16 @@ public:
 	virtual void CompleteStep();
 
 	UPROPERTY()
+	UWorld* WorldReference;
+
+	UPROPERTY()
 	FStepCompleted StepCompleted;
 	
 	virtual void InitQuestVariables(const FCollectionQuest& Parameters) {}
 
 	virtual void InitQuestVariables(const FLocationQuest& Parameters) {}
+
+	virtual void SetWorldReference(UWorld* InWorld) {WorldReference = InWorld;};
 	
 	
 };

@@ -3,31 +3,32 @@
 
 #include "GoToQuest.h"
 
+#include "ItemSpawnPoint.h"
 #include "LocationBase.h"
 #include "LocationSpawnPoint.h"
 
 void UGoToQuest::StartQuest()
 {
+	UE_LOG(LogTemp, Warning, TEXT("GoToHasStarted"));
 	Super::StartQuest();
-	World = GetWorld();
-	//Create Spawn List : Gets all spawn Location transforms and makes a list.
 	for (TObjectIterator<ALocationSpawnPoint> Itr; Itr; ++Itr)
 	{
 		ALocationSpawnPoint* CurrentActor = *Itr;
-		FTransform ActorTransform = CurrentActor->GetActorTransform();
-		FVector ActorLocation = ActorTransform.GetLocation();
-		SpawnPoints.Add(ActorLocation);
+		FString LocationName = CurrentActor->LocationName;
+		
+		if (LocationName == SpawnPointName)
+		{
+			SpawnPoint = CurrentActor->GetActorLocation();
+			SpawnLocationCollider(SpawnPoint);
+			UE_LOG(LogTemp, Warning, TEXT("Location Found"));
+		}
 	}
-	
-	//Calls Spawn Function and gives a random Index to spawn it at.
-	
-	SpawnLocationCollider(FMath::RandRange(0, SpawnPoints.Num() - 1));
+	UE_LOG(LogTemp, Warning, TEXT("Run Spawn"));
 	
 }
 
 void UGoToQuest::CompleteStep()
 {
-
 	Super::CompleteStep();
 }
 
@@ -37,17 +38,37 @@ void UGoToQuest::LocationCollision()
 	CompleteStep();
 }
 
-void UGoToQuest::SpawnLocationCollider(int LocationInt)
+void UGoToQuest::SpawnLocationCollider(FVector SpawnLocation)
 {
-	FVector SpawnLocation = SpawnPoints[LocationInt];
 	FRotator SpawnRotation(0.0f, 0.0f, 0.0f);
+
+	UObject* SpawnActor = Cast<UObject>(StaticLoadObject(UObject::StaticClass(), NULL, TEXT("/Game/Quests/BP_Location.BP_Location")));
+
+	UBlueprint* GeneratedBP = Cast<UBlueprint>(SpawnActor);
+	if (!SpawnActor)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 20.f, FColor::Red, FString::Printf(TEXT("CANT FIND OBJECT TO SPAWN")));
+		return;
+	}
+
+	UClass* SpawnClass = SpawnActor->StaticClass();
+	if (SpawnClass == NULL)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, FString::Printf(TEXT("CLASS == NULL")));
+		return;
+	}
+
+	FActorSpawnParameters SpawnParams;
+	SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+	WorldReference->SpawnActor<AActor>(GeneratedBP->GeneratedClass, SpawnLocation, SpawnRotation, SpawnParams);
 	
-	ALocationBase* SpawnedItem = World->SpawnActor<ALocationBase>(Location, SpawnLocation , SpawnRotation);
-	SpawnedItem->PlayerOverlap.AddDynamic(this, &UGoToQuest::LocationCollision);
+	UE_LOG(LogTemp, Warning, TEXT("WE HAVE FINSHED THIS CODE Spawned"));
 }
 
 void UGoToQuest::InitQuestVariables(const FLocationQuest& Parameters)
 {
 	Super::InitQuestVariables(Parameters);
+	SpawnPointName = Parameters.LocationName;
+	UE_LOG(LogTemp, Warning, TEXT("GOTO InitQuest Started"));
 	StartQuest();
 }

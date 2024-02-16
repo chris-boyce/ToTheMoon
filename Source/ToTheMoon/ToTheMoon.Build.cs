@@ -6,9 +6,10 @@ public class ToTheMoon : ModuleRules
 {
 	public ToTheMoon(ReadOnlyTargetRules Target) : base(Target)
 	{
+		PrivateDependencyModuleNames.AddRange(new string[] { "Paper2D" });
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 	
-		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "EnhancedInput" , "UMG", "Slate", "SlateCore", "Json", "JsonUtilities", "Niagara", "OpenAIAPI"});
+		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "EnhancedInput" , "UMG", "Slate", "SlateCore", "Json", "JsonUtilities", "Niagara", "OpenAIAPI", "Paper2D"});
 		
 		PublicAdditionalLibraries.Add("C:/Users/skyog/Documents/GitHub/LlamaReupload/Libraries/llama.lib");
 		RuntimeDependencies.Add("C:/Users/skyog/Documents/GitHub/LlamaReupload/Binaries/Win64/llama.dll");

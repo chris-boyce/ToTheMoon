@@ -2,13 +2,28 @@
 
 
 #include "LocationBase.h"
+#include "PaperSprite.h"
+#include "PaperSpriteComponent.h"
+#include "Components/BoxComponent.h"
 
-// Sets default values
-ALocationBase::ALocationBase()
+
+
+
+ALocationBase::ALocationBase(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 {
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+	UBoxComponent* BoxCollider;
 
+	// Initialize the BoxCollider and attach it to the PaperSpriteComponent
+	BoxCollider = CreateDefaultSubobject<UBoxComponent>(TEXT("BoxCollider"));
+	BoxCollider->SetBoxExtent(FVector(200.0f, 200.0f, 200.0f)); 
+	BoxCollider->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics); 
+	BoxCollider->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Overlap); 
+	BoxCollider->SetGenerateOverlapEvents(true); 
+	RootComponent = BoxCollider;
+
+	
+	
 }
 
 // Called when the game starts or when spawned
@@ -17,9 +32,9 @@ void ALocationBase::BeginPlay()
 	UE_LOG(LogTemp, Warning, TEXT("Alive"));
 	Super::BeginPlay();
 	
+	
 }
 
-// Called every frame
 void ALocationBase::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
@@ -31,7 +46,8 @@ void ALocationBase::NotifyActorBeginOverlap(AActor* OtherActor)
 	UE_LOG(LogTemp, Warning, TEXT("OVERLAP"));
 	Super::NotifyActorBeginOverlap(OtherActor);
 	PlayerOverlap.Broadcast();
-	Destroy();
+	//Destroy();
 }
+
 
 

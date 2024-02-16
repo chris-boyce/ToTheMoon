@@ -79,19 +79,19 @@ void ANPCQuestGiver::QuestGive()
 void ANPCQuestGiver::HandleNewQuestData(EQuestType QuestType, FQuestData QuestData)
 {
 	UE_LOG(LogTemp, Warning, TEXT("HAS RUN THE HANDLE"));
-	UQuestBase* QuestInstance = NewObject<UQuestBase>();
-	FLocationQuest LocationQuest;
+	
 	switch (QuestType)
 	{
 	case EQuestType::GoTo:
-		
+		UE_LOG(LogTemp, Warning, TEXT("HANDLE HAS RUN GOTO"));
+		QuestInstance = NewObject<UGoToQuest>();
 		QuestInstance->QuestName = QuestData.MissionName;
 		QuestInstance->QuestDescription = QuestData.MissionDescription;
 		QuestInstance->QuestType = QuestType;
-		
 		LocationQuest.LocationName = QuestData.Location;
+		QuestInstance->SetWorldReference(GetWorld());
 		QuestInstance->InitQuestVariables(LocationQuest);
-		
+		PlayerQuestComponent->AddQuest(QuestInstance);
 		break;
 	case EQuestType::Collect:
 		UE_LOG(LogTemp, Warning, TEXT("COLLECT NOT COMPLETED"));
@@ -100,6 +100,6 @@ void ANPCQuestGiver::HandleNewQuestData(EQuestType QuestType, FQuestData QuestDa
 		UE_LOG(LogTemp, Warning, TEXT("KILL NOT COMPLETED"));
 		break;
 	}
-	PlayerQuestComponent->AddQuest(QuestInstance);
+	
 }
 

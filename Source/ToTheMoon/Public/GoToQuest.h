@@ -26,18 +26,18 @@ class TOTHEMOON_API UGoToQuest : public UQuestBase
 public:
 	UFUNCTION()
 	void LocationCollision();
-
-	UPROPERTY(EditAnywhere)
-	TSubclassOf<ALocationBase> Location = nullptr;
 	
 	UFUNCTION()
-	void SpawnLocationCollider(int LocationInt);
+	void SpawnLocationCollider(FVector Location);
 
-	UPROPERTY()
-	UWorld* World;
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<ALocationBase> LocationBaseClass = nullptr;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	TArray<FVector> SpawnPoints;
+	FVector SpawnPoint;
 
-	virtual void InitQuestVariables(const FLocationQuest& Parameters) override;
+	UPROPERTY()
+	FString SpawnPointName;
+	
+	void InitQuestVariables(const FLocationQuest& Parameters) override;
 };
