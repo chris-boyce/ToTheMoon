@@ -3,6 +3,8 @@
 
 #include "QuestItemBase.h"
 
+#include "Engine/AssetManager.h"
+#include "Engine/StreamableManager.h"
 #include "Kismet/GameplayStatics.h"
 
 
@@ -37,5 +39,16 @@ void AQuestItemBase::Interact_Implementation()
 	PlayerHit.Broadcast(GetClass());
 	Destroy();
 }
+
+void AQuestItemBase::SetObject(FString ObjectName)
+{
+	
+}
+
+void AQuestItemBase::LoadMeshFromFile(const FString& AssetPath)
+{
+	
+}
+
 
 

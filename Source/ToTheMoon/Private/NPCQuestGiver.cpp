@@ -45,61 +45,42 @@ void ANPCQuestGiver::Interact_Implementation()
 	IInteractable::Interact_Implementation();
 }
 
-void ANPCQuestGiver::QuestGive()
-{
-	/*
-	UQuestBase* QuestInstance = NewObject<UQuestBase>(this, QuestTypes[0]); //TODO CHANGE THIS BETWEEN QUEST TYPES
-	switch (QuestInstance->QuestType)
-	{
-	case EQuestType::Collect:
-			
-		CollectionQuestData.QuestItem = QuestItem[0]; //TODO FIND A WAY TO ADD THE CLASSES
-		CollectionQuestData.ItemCollectionAmount = 1;
-		QuestInstance->InitQuestVariables(CollectionQuestData);
-			
-		break;
-			
-	case EQuestType::GoTo:
-			
-		QuestInstance->QuestName = "Waypoint Finder";
-		QuestInstance->QuestDescription = "Go To the Waypoint and Stand Under It";
-		GoToQuestData.LocationName = "Here";
-		QuestInstance->InitQuestVariables(GoToQuestData);
-			
-		break;
-		
-	default:
-		UE_LOG(LogTemp, Warning, TEXT("Unknown quest type"));
-		break;
-	}
-	*/
-	
-}
+
 
 void ANPCQuestGiver::HandleNewQuestData(EQuestType QuestType, FQuestData QuestData)
 {
 	UE_LOG(LogTemp, Warning, TEXT("HAS RUN THE HANDLE"));
-	
-	switch (QuestType)
+	if(PlayerQuestComponent->QuestQueue.IsEmpty())
 	{
-	case EQuestType::GoTo:
-		UE_LOG(LogTemp, Warning, TEXT("HANDLE HAS RUN GOTO"));
-		QuestInstance = NewObject<UGoToQuest>();
-		QuestInstance->QuestName = QuestData.MissionName;
-		QuestInstance->QuestDescription = QuestData.MissionDescription;
-		QuestInstance->QuestType = QuestType;
-		LocationQuest.LocationName = QuestData.Location;
-		QuestInstance->SetWorldReference(GetWorld());
-		QuestInstance->InitQuestVariables(LocationQuest);
-		PlayerQuestComponent->AddQuest(QuestInstance);
-		break;
-	case EQuestType::Collect:
-		UE_LOG(LogTemp, Warning, TEXT("COLLECT NOT COMPLETED"));
-		break;
-	case EQuestType::Kill:
-		UE_LOG(LogTemp, Warning, TEXT("KILL NOT COMPLETED"));
-		break;
+		switch (QuestType)
+		{
+		case EQuestType::GoTo:
+			QuestInstance = NewObject<UGoToQuest>();
+			QuestInstance->QuestName = QuestData.MissionName;
+			QuestInstance->QuestDescription = QuestData.MissionDescription;
+			QuestInstance->QuestType = QuestType;
+			LocationQuest.LocationName = QuestData.Location;
+			QuestInstance->SetWorldReference(GetWorld());
+			QuestInstance->InitQuestVariables(LocationQuest);
+			PlayerQuestComponent->AddQuest(QuestInstance);
+			break;
+		case EQuestType::Collect:
+			QuestInstance = NewObject<UTestQuest>();
+			QuestInstance->QuestName = QuestData.MissionName;
+			QuestInstance->QuestDescription = QuestData.MissionDescription;
+			QuestInstance->QuestType = QuestType;
+			CollectionQuest.ItemName = QuestData.ItemType;
+			CollectionQuest.ItemCollectionAmount = QuestData.Amount;
+			QuestInstance->SetWorldReference(GetWorld());
+			QuestInstance->InitQuestVariables(CollectionQuest);
+			PlayerQuestComponent->AddQuest(QuestInstance);
+			break;
+		case EQuestType::Kill:
+			UE_LOG(LogTemp, Warning, TEXT("KILL NOT COMPLETED"));
+			break;
+		}
 	}
+	
 	
 }
 
