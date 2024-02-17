@@ -7,6 +7,8 @@
 #include "GameFramework/Actor.h"
 #include "Target.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnEnemyDeath);
+
 UCLASS()
 class TOTHEMOON_API ATarget : public AActor, public IDamageable
 {
@@ -22,5 +24,7 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	virtual void Damage_Implementation() override;
+
+	FOnEnemyDeath OnDeath;
 
 };

@@ -33,6 +33,8 @@ public:
 	UPROPERTY(EditAnywhere, Category="MissionControls")
 	TArray<FChatLog> ChatLog;
 
+	FChatSettings ChatSettings;
+
 	UPROPERTY(EditAnywhere, Category="MissionControls")
 	FString ReturnString = "";
 
@@ -55,7 +57,7 @@ public:
 	void StringToJson(FString GPTReturnString);
 
 
-	FString StartPrompt = "You are a assistant that generates JSONS. You always return just the JSON with no additional context. You are an assistant responsible for generating JSONs for different types of missions. Each mission has a 'MissionType' attribute with three options: 'Collect', 'GoTo', and 'Kill'. Pick Randomly";
+	FString StartPrompt = "You are a assistant that generates JSONS. You always return just the JSON with no additional context. You are an assistant responsible for generating JSONs for different types of missions. Each mission has a 'MissionType' attribute with three options: 'Kill', 'Collect', 'GoTo'. Pick randomly but do not repeat the same one more than once in a row.";
 	FString EndPrompt = "Ensure the generated JSONs accurately represent each mission type based on the provided options.";
 
 

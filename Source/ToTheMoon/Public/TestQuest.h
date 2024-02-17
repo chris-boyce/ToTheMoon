@@ -4,7 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "QuestBase.h"
-#include "QuestItemBase.h"
 #include "TestQuest.generated.h"
 
 //Collection Quest Needed Variables

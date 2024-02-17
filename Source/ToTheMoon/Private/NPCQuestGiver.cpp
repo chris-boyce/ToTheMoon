@@ -4,6 +4,7 @@
 #include "NPCQuestGiver.h"
 #include "GoToQuest.h"
 #include "GPTComponent.h"
+#include "KillQuest.h"
 #include "QuestBase.h"
 #include "TestQuest.h"
 #include "Kismet/GameplayStatics.h"
@@ -76,7 +77,15 @@ void ANPCQuestGiver::HandleNewQuestData(EQuestType QuestType, FQuestData QuestDa
 			PlayerQuestComponent->AddQuest(QuestInstance);
 			break;
 		case EQuestType::Kill:
-			UE_LOG(LogTemp, Warning, TEXT("KILL NOT COMPLETED"));
+			QuestInstance = NewObject<UKillQuest>();
+			QuestInstance->QuestName = QuestData.MissionName;
+			QuestInstance->QuestDescription = QuestData.MissionDescription;
+			QuestInstance->QuestType = QuestType;
+			KillQuest.EnemyToKill = QuestData.EnemyToKill;
+			KillQuest.AmountToKill = QuestData.Amount;
+			QuestInstance->SetWorldReference(GetWorld());
+			QuestInstance->InitQuestVariables(KillQuest);
+			PlayerQuestComponent->AddQuest(QuestInstance);
 			break;
 		}
 	}

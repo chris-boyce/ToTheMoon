@@ -12,6 +12,7 @@
 UGPTComponent::UGPTComponent()
 {
 	PrimaryComponentTick.bCanEverTick = true;
+	
 }
 
 
@@ -20,6 +21,12 @@ void UGPTComponent::BeginPlay()
 	Super::BeginPlay();
 	UE_LOG(LogTemp, Warning, TEXT("GPT BEGIN"));
 	UOpenAIUtils::setOpenAIApiKey("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");
+	ChatLog[0].content = FinalPromptText();
+	ChatLog[0].role = EOAChatRole::SYSTEM;
+	ChatSettings.model = EOAChatEngineType::GPT_3_5_TURBO;
+	ChatSettings.messages = ChatLog;
+	ChatSettings.temperature = 1.0f;
+	ChatSettings.maxTokens  = 100;
 }
 
 
@@ -31,13 +38,10 @@ void UGPTComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorCo
 
 void UGPTComponent::CreateMission()
 {
-	ChatLog[0].content = FinalPromptText();
-	ChatLog[0].role = EOAChatRole::SYSTEM;
-	FChatSettings ChatSettings;
-	ChatSettings.model = EOAChatEngineType::GPT_3_5_TURBO;
-	ChatSettings.messages = ChatLog;
-	ChatSettings.temperature = 1.0f;
-	ChatSettings.maxTokens  = 100;
+	FChatLog NewChat;
+	NewChat.content = "Generate New Mission";
+	NewChat.role = EOAChatRole::SYSTEM;
+	ChatSettings.messages.Add(NewChat);
 	UE_LOG(LogTemp, Warning, TEXT("GPT CALLED"));
 	if(!isEnable)
 	{

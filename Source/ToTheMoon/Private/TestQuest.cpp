@@ -3,7 +3,7 @@
 
 #include "TestQuest.h"
 #include "ItemSpawnPoint.h"
-#include "LocationBase.h"
+#include "QuestItemBase.h"
 
 
 void UTestQuest::StartQuest()
@@ -69,7 +69,6 @@ void UTestQuest::CollectedItem(UClass* ObjectClass)
 
 void UTestQuest::HandleCorrectItem()
 {
-	//If its correct it will add it to the total and compare it to the Quest
 	TotalCollected++;
 	if(AmountCollected == TotalCollected)
 	{

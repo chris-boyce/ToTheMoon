@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GoToQuest.h"
 #include "Interactable.h"
+#include "KillQuest.h"
 #include "PlayerQuestComponent.h"
 #include "QuestBase.h"
 #include "TestQuest.h"
@@ -50,5 +51,8 @@ public:
 
 	UPROPERTY()
 	FCollectionQuest CollectionQuest;
+
+	UPROPERTY()
+	FKillQuestData KillQuest;
 
 };
