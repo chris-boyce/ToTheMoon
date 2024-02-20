@@ -5,8 +5,10 @@
 #include "CoreMinimal.h"
 #include "GoToQuest.h"
 #include "Interactable.h"
+#include "KillQuest.h"
 #include "PlayerQuestComponent.h"
 #include "QuestBase.h"
+#include "TestQuest.h"
 #include "GameFramework/Pawn.h"
 #include "NPCQuestGiver.generated.h"
 
@@ -31,10 +33,7 @@ public:
 
 	UFUNCTION()
 	virtual void Interact_Implementation() override;
-
-	UFUNCTION()
-	void QuestGive();
-
+	
 	UPROPERTY()
 	UPlayerQuestComponent* PlayerQuestComponent;
 	
@@ -49,5 +48,11 @@ public:
 	
 	UPROPERTY()
 	FLocationQuest LocationQuest;
+
+	UPROPERTY()
+	FCollectionQuest CollectionQuest;
+
+	UPROPERTY()
+	FKillQuestData KillQuest;
 
 };

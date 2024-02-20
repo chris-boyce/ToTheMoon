@@ -6,8 +6,10 @@
 #include "UObject/NoExportTypes.h"
 #include "QuestBase.generated.h"
 
+
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FStepCompleted);
 
+struct FKillQuestData;
 struct FLocationQuest;
 struct FCollectionQuest;
 USTRUCT(BlueprintType)
@@ -78,6 +80,8 @@ public:
 	virtual void InitQuestVariables(const FCollectionQuest& Parameters) {}
 
 	virtual void InitQuestVariables(const FLocationQuest& Parameters) {}
+
+	virtual void InitQuestVariables(const FKillQuestData& Parameters) {}
 
 	virtual void SetWorldReference(UWorld* InWorld) {WorldReference = InWorld;};
 	

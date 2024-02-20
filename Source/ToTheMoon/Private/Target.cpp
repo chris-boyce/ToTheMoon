@@ -25,6 +25,7 @@ void ATarget::Tick(float DeltaTime)
 void ATarget::Damage_Implementation()
 {
 	IDamageable::Damage_Implementation();
+	OnDeath.Broadcast();
 	Destroy();
 }
 

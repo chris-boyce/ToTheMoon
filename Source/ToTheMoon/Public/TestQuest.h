@@ -4,7 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "QuestBase.h"
-#include "QuestItemBase.h"
 #include "TestQuest.generated.h"
 
 //Collection Quest Needed Variables
@@ -14,10 +13,10 @@ struct FCollectionQuest
 	GENERATED_BODY()
 public:
 	UPROPERTY(EditAnywhere)
-	TSubclassOf<AQuestItemBase> QuestItem;
-	
-	UPROPERTY(EditAnywhere)
 	int ItemCollectionAmount;
+
+	UPROPERTY(EditAnywhere)
+	FString ItemName;
 	
 };
 
@@ -32,14 +31,11 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TArray<FVector> SpawnPoints;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	FCollectionQuest QuestItemList;
-
-	virtual void StartQuest() override;
-
 	UPROPERTY()
-	UWorld* World;
-
+	FString ObjectToSpawn;
+	
+	virtual void StartQuest() override;
+	
 	UFUNCTION()
 	void SpawnItem(int SpawnPoint);
 
@@ -50,7 +46,12 @@ public:
 	void HandleCorrectItem();
 
 	UPROPERTY()
+	int TotalCollected = 0;
+
+	UPROPERTY()
 	int AmountCollected = 0;
+
+	
 
 	virtual void InitQuestVariables(const FCollectionQuest& Parameters) override;
 
