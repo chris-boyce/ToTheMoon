@@ -26,7 +26,7 @@ void UKillQuest::SpawnEnemy(int SpawnPoint)
 	FVector SpawnLocation = SpawnPoints[SpawnPoint];
 	FRotator SpawnRotation(0.0f, 0.0f, 0.0f);
 	UObject* SpawnActor;
-	SpawnActor = Cast<UObject>(StaticLoadObject(UObject::StaticClass(), NULL, TEXT("/Game/Quests/BP_Target.BP_Target")));
+	SpawnActor = Cast<UObject>(StaticLoadObject(UObject::StaticClass(), NULL, TEXT("/Game/Quests/BP_Alien.BP_Alien")));
 	if (!SpawnActor)
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 20.f, FColor::Red, FString::Printf(TEXT("CANT FIND OBJECT TO SPAWN")));
