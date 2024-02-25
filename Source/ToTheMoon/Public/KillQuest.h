@@ -46,5 +46,11 @@ public:
 	int AmountToKill = 0;
 
 	virtual void InitQuestVariables(const FKillQuestData& Parameters) override;
+
+	UPROPERTY(EditAnywhere, Category = "Assets")
+	TSoftObjectPtr<UObject> PirateObject;
+
+	UPROPERTY(EditAnywhere, Category = "Assets")
+	TSoftObjectPtr<UObject> AlienObject;
 	
 };
