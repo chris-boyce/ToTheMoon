@@ -2,7 +2,10 @@
 
 
 #include "KillQuest.h"
+
+#include "EngineUtils.h"
 #include "ItemSpawnPoint.h"
+#include "SavedData.h"
 #include "Target.h"
 
 void UKillQuest::StartQuest()
@@ -25,25 +28,18 @@ void UKillQuest::SpawnEnemy(int SpawnPoint)
 {
 	FVector SpawnLocation = SpawnPoints[SpawnPoint];
 	FRotator SpawnRotation(0.0f, 0.0f, 0.0f);
-	UObject* SpawnActor;
-	SpawnActor = Cast<UObject>(StaticLoadObject(UObject::StaticClass(), NULL, TEXT("/Game/Quests/BP_Alien.BP_Alien")));
-	if (!SpawnActor)
+	ASavedData* FoundActor = nullptr;
+	for (TActorIterator<ASavedData> It(WorldReference); It; ++It)
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 20.f, FColor::Red, FString::Printf(TEXT("CANT FIND OBJECT TO SPAWN")));
-		return;
-	}
-	UBlueprint* GeneratedBP = Cast<UBlueprint>(SpawnActor);
-	UClass* SpawnClass = SpawnActor->StaticClass();
-	if (SpawnClass == NULL)
-	{
-		GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, FString::Printf(TEXT("CLASS == NULL")));
-		return;
+		FoundActor = *It;
+		break;
 	}
 	FActorSpawnParameters SpawnParams;
 	SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-	ATarget* Enemy = WorldReference->SpawnActor<ATarget>(GeneratedBP->GeneratedClass, SpawnLocation, SpawnRotation, SpawnParams);
+
+	UClass* EnemyClass = (EnemyToSpawn == "Alien") ? FoundActor->Alien : FoundActor->Pirate;
+	ATarget* Enemy = WorldReference->SpawnActor<ATarget>(EnemyClass, SpawnLocation, SpawnRotation, SpawnParams);
 	Enemy->OnDeath.AddDynamic(this, &UKillQuest::HandleEnemyDeath);
-	
 }
 
 void UKillQuest::HandleEnemyDeath()

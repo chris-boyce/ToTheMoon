@@ -53,6 +53,8 @@ public:
 
 	
 
+	
+
 	virtual void InitQuestVariables(const FCollectionQuest& Parameters) override;
 
 	

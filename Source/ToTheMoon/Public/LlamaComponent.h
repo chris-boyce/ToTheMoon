@@ -68,8 +68,8 @@ struct FLLMModelParams
 	GENERATED_USTRUCT_BODY();
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "LLM Model Params")
-	//FString PathToModel = "C:/Users/skyog/Desktop/Models/vicuna-7b-v1.5.Q4_0.gguf";
-	FString PathToModel = "C:/Users/skyog/Desktop/Models/llama-2-7b-chat.Q4_K_M.gguf";
+	FString PathToModel = "C:/Users/skyog/Desktop/Models/l1.gguf";
+	//FString PathToModel = "C:/Users/skyog/Desktop/Models/gx.gguf";
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "LLM Model Params")
 	FString Prompt = "[INST] <<SYS>> You are a helpful, respectful and honest assistant. Always answer as helpfully as possible, while being safe.  Your answers should not include any harmful, unethical, racist, sexist, toxic, dangerous, or illegal content. Please ensure that your responses are socially unbiased and positive in nature. If a question does not make any sense, or is not factually coherent, explain why instead of answering something not correct. If you don't know the answer to a question, please don't share false information.<</SYS>> {prompt}[/INST]";

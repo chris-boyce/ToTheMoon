@@ -31,7 +31,7 @@ void UTestQuest::SpawnItem(int SpawnPoint)
 	UObject* SpawnActor;
 	if(ObjectToSpawn == "Rock")
 	{
-		SpawnActor = Cast<UObject>(StaticLoadObject(UObject::StaticClass(), NULL, TEXT("/Game/Quests/QuestItems/QuestItemCoin.QuestItemCoin")));
+		SpawnActor = Cast<UObject>(StaticLoadObject(UObject::StaticClass(), NULL, TEXT("/Game/Quests/QuestItems/QuestItemRock.QuestItemRock")));
 	}
 	else if(ObjectToSpawn == "Money")
 	{
@@ -39,7 +39,7 @@ void UTestQuest::SpawnItem(int SpawnPoint)
 	}
 	else
 	{
-		SpawnActor = Cast<UObject>(StaticLoadObject(UObject::StaticClass(), NULL, TEXT("/Game/Quests/QuestItems/QuestItemCoin.QuestItemCoin")));
+		SpawnActor = Cast<UObject>(StaticLoadObject(UObject::StaticClass(), NULL, TEXT("/Game/Quests/QuestItems/QuestItemKey.QuestItemKey")));
 	}
 	
 	UBlueprint* GeneratedBP = Cast<UBlueprint>(SpawnActor);
