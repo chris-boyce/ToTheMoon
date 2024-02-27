@@ -6,6 +6,7 @@
 #include "ItemSpawnPoint.h"
 #include "LocationBase.h"
 #include "LocationSpawnPoint.h"
+#include "SavedData.h"
 
 void UGoToQuest::StartQuest()
 {
@@ -41,26 +42,10 @@ void UGoToQuest::LocationCollision()
 void UGoToQuest::SpawnLocationCollider(FVector SpawnLocation)
 {
 	FRotator SpawnRotation(0.0f, 0.0f, 0.0f);
-
-	UObject* SpawnActor = Cast<UObject>(StaticLoadObject(UObject::StaticClass(), NULL, TEXT("/Game/Quests/BP_Location.BP_Location")));
-
-	UBlueprint* GeneratedBP = Cast<UBlueprint>(SpawnActor);
-	if (!SpawnActor)
-	{
-		GEngine->AddOnScreenDebugMessage(-1, 20.f, FColor::Red, FString::Printf(TEXT("CANT FIND OBJECT TO SPAWN")));
-		return;
-	}
-
-	UClass* SpawnClass = SpawnActor->StaticClass();
-	if (SpawnClass == NULL)
-	{
-		GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, FString::Printf(TEXT("CLASS == NULL")));
-		return;
-	}
-
+	
 	FActorSpawnParameters SpawnParams;
 	SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-	ALocationBase* LocationBase = WorldReference->SpawnActor<ALocationBase>(GeneratedBP->GeneratedClass, SpawnLocation, SpawnRotation, SpawnParams);
+	ALocationBase* LocationBase = WorldReference->SpawnActor<ALocationBase>(ASavedData::GetInstance(WorldReference)->SpawnPoint, SpawnLocation, SpawnRotation, SpawnParams);
 	LocationBase->PlayerOverlap.AddDynamic(this, &UGoToQuest::CompleteStep);
 	
 	UE_LOG(LogTemp, Warning, TEXT("WE HAVE FINSHED THIS CODE Spawned"));

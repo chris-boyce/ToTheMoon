@@ -6,6 +6,7 @@
 #include "Alien.h"
 #include "PlayerQuestComponent.h"
 #include "QuestBase.h"
+#include "SavedData.h"
 #include "Teleporter.h"
 #include "WorldInfo.h"
 #include "GameFramework/Character.h"
@@ -80,13 +81,13 @@ FString UTopicInfoRelay::SearchMission()
 FString UTopicInfoRelay::SearchPlanet()
 {
 	AWorldInfo* WorldInfo = Cast<AWorldInfo>(UGameplayStatics::GetActorOfClass(GetWorld(), AWorldInfo::StaticClass()));
-	return "<s>We are on a " + WorldInfo->Classification +"Called " + WorldInfo->Name + "In the " + WorldInfo->System + "</s>";
+	return "<s>We are on a " + ASavedData::GetInstance(GetWorld())->Classification  +"Called " + ASavedData::GetInstance(GetWorld())->Name + "In the " + ASavedData::GetInstance(GetWorld())->System + "</s>";
 }
 
 FString UTopicInfoRelay::SearchTime()
 {
 	AWorldInfo* WorldInfo = Cast<AWorldInfo>(UGameplayStatics::GetActorOfClass(GetWorld(), AWorldInfo::StaticClass()));
-	return "<s>The date is " + WorldInfo->Date + "and the time is " + WorldInfo->Time + "</s>";
+	return "<s>The date is " + ASavedData::GetInstance(GetWorld())->Date + "and the time is " + ASavedData::GetInstance(GetWorld())->Time + "</s>";
 }
 
 FString UTopicInfoRelay::SearchThreats()

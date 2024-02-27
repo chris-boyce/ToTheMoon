@@ -3,6 +3,7 @@
 
 #include "KillQuest.h"
 
+#include "EnemySpawnPoint.h"
 #include "EngineUtils.h"
 #include "ItemSpawnPoint.h"
 #include "SavedData.h"
@@ -11,9 +12,9 @@
 void UKillQuest::StartQuest()
 {
 	Super::StartQuest();
-	for (TObjectIterator<AItemSpawnPoint> Itr; Itr; ++Itr)
+	for (TObjectIterator<AEnemySpawnPoint> Itr; Itr; ++Itr)
 	{
-		AItemSpawnPoint* CurrentActor = *Itr;
+		AEnemySpawnPoint* CurrentActor = *Itr;
 		FTransform ActorTransform = CurrentActor->GetActorTransform();
 		FVector ActorLocation = ActorTransform.GetLocation();
 		SpawnPoints.Add(ActorLocation);
@@ -28,16 +29,21 @@ void UKillQuest::SpawnEnemy(int SpawnPoint)
 {
 	FVector SpawnLocation = SpawnPoints[SpawnPoint];
 	FRotator SpawnRotation(0.0f, 0.0f, 0.0f);
-	ASavedData* FoundActor = nullptr;
-	for (TActorIterator<ASavedData> It(WorldReference); It; ++It)
-	{
-		FoundActor = *It;
-		break;
-	}
 	FActorSpawnParameters SpawnParams;
 	SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 
-	UClass* EnemyClass = (EnemyToSpawn == "Alien") ? FoundActor->Alien : FoundActor->Pirate;
+	TSubclassOf<ATarget> EnemyClass = (EnemyToSpawn == "Alien") ? ASavedData::GetInstance(WorldReference)->Alien : ASavedData::GetInstance(WorldReference)->Pirate;
+	if(!ASavedData::GetInstance(WorldReference))
+	{
+		UE_LOG(LogTemp, Error, TEXT("Wolrd is Dead"));
+		return;
+		
+	}
+	if(!EnemyClass)
+	{
+		UE_LOG(LogTemp, Error, TEXT("THIS IS DEAD 2"));
+		return;
+	}
 	ATarget* Enemy = WorldReference->SpawnActor<ATarget>(EnemyClass, SpawnLocation, SpawnRotation, SpawnParams);
 	Enemy->OnDeath.AddDynamic(this, &UKillQuest::HandleEnemyDeath);
 }
