@@ -3480,16 +3480,16 @@
 	],
 	"RuntimeDependencies": [
 		{
-			"Path": "$(ProjectDir)/Binaries/Win64/llama.dll",
-			"Type": "NonUFS"
-		},
-		{
 			"Path": "$(ProjectDir)/Plugins/OpenAI-Api-Unreal-main/OpenAIAPI.uplugin",
 			"Type": "UFS"
 		},
 		{
 			"Path": "$(ProjectDir)/ToTheMoon.uproject",
 			"Type": "UFS"
+		},
+		{
+			"Path": "C:\\Users\\skyog\\Documents\\GitHub\\ToTheMoonReLlama\\Binaries\\Win64\\llama.dll",
+			"Type": "NonUFS"
 		},
 		{
 			"Path": "$(EngineDir)/Binaries/ThirdParty/DbgHelp/dbghelp.dll",

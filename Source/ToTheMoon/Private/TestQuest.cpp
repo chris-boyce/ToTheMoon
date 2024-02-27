@@ -4,6 +4,7 @@
 #include "TestQuest.h"
 #include "ItemSpawnPoint.h"
 #include "QuestItemBase.h"
+#include "SavedData.h"
 
 
 void UTestQuest::StartQuest()
@@ -28,38 +29,37 @@ void UTestQuest::SpawnItem(int SpawnPoint)
 	//Spawns Object at location and adds a call the base of Quest for when it is collected
 	FVector SpawnLocation = SpawnPoints[SpawnPoint];
 	FRotator SpawnRotation(0.0f, 0.0f, 0.0f);
-	UObject* SpawnActor;
+	TSubclassOf<AQuestItemBase> SpawnActor;
+	if(!ASavedData::GetInstance(WorldReference))
+	{
+		UE_LOG(LogTemp, Error, TEXT("InstanceDead"));
+		return;
+		
+	}
 	if(ObjectToSpawn == "Rock")
 	{
-		SpawnActor = Cast<UObject>(StaticLoadObject(UObject::StaticClass(), NULL, TEXT("/Game/Quests/QuestItems/QuestItemRock.QuestItemRock")));
+		SpawnActor = ASavedData::GetInstance(WorldReference)->Rock;
 	}
 	else if(ObjectToSpawn == "Money")
 	{
-		SpawnActor = Cast<UObject>(StaticLoadObject(UObject::StaticClass(), NULL, TEXT("/Game/Quests/QuestItems/QuestItemCoin.QuestItemCoin")));
+		SpawnActor = ASavedData::GetInstance(WorldReference)->Coin;
 	}
 	else
 	{
-		SpawnActor = Cast<UObject>(StaticLoadObject(UObject::StaticClass(), NULL, TEXT("/Game/Quests/QuestItems/QuestItemKey.QuestItemKey")));
+		SpawnActor = ASavedData::GetInstance(WorldReference)->Key;
 	}
 	
-	UBlueprint* GeneratedBP = Cast<UBlueprint>(SpawnActor);
-	if (!SpawnActor)
+	if(!SpawnActor)
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 20.f, FColor::Red, FString::Printf(TEXT("CANT FIND OBJECT TO SPAWN")));
+		UE_LOG(LogTemp, Error, TEXT("THIS IS DEAD"));
 		return;
 	}
-
-	UClass* SpawnClass = SpawnActor->StaticClass();
-	if (SpawnClass == NULL)
-	{
-		GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, FString::Printf(TEXT("CLASS == NULL")));
-		return;
-	}
-
+	
+	
 	FActorSpawnParameters SpawnParams;
 	SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-	AQuestItemBase* LocationBase = WorldReference->SpawnActor<AQuestItemBase>(GeneratedBP->GeneratedClass, SpawnLocation, SpawnRotation, SpawnParams);
-	LocationBase->PlayerHit.AddDynamic(this, &UTestQuest::CollectedItem);
+	AQuestItemBase* QuestItem = WorldReference->SpawnActor<AQuestItemBase>(SpawnActor, SpawnLocation, SpawnRotation, SpawnParams);
+	QuestItem->PlayerHit.AddDynamic(this, &UTestQuest::CollectedItem);
 }
 
 void UTestQuest::CollectedItem(UClass* ObjectClass)
