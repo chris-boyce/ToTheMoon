@@ -20,7 +20,7 @@ void UGPTComponent::BeginPlay()
 {
 	Super::BeginPlay();
 	UE_LOG(LogTemp, Warning, TEXT("GPT BEGIN"));
-	UOpenAIUtils::setOpenAIApiKey("");
+	UOpenAIUtils::setOpenAIApiKey("sk-proj-LgCsZUaUHnQNJP97Snh8T3BlbkFJmQ2ERfGLF9PclxOwrsPc");
 	ChatLog[0].content = FinalPromptText();
 	ChatLog[0].role = EOAChatRole::SYSTEM;
 	ChatSettings.model = EOAChatEngineType::GPT_3_5_TURBO;
