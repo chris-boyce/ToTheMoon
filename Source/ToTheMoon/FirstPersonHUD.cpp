@@ -104,8 +104,7 @@ void AFirstPersonHUD::UpdateWidgets()
 	default: ;
 	}
 
-	// This ensures that even if something has not changed recently, the newly switched-to widget will get sent
-	// the latest character stats, so it can update itself.
+
 	ToggleIsVisableWidget();
 	PlayerCharacter->BroadcastCurrentStats();
 }

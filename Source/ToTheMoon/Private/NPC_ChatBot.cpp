@@ -134,7 +134,6 @@ void ANPC_ChatBot::ExitChat()
 
 void ANPC_ChatBot::TopicSelected(FQuestionTopic Topic)
 {
-	UE_LOG(LogTemp, Warning, TEXT("GATHERTOPICCALLED"));
 	CurrentInformation = TopicInfoRelay->GatherTopicInfo(Topic);
 }
 
